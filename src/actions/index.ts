@@ -24,24 +24,34 @@ export async function createSnippet(formState: { message: string }, formData: Fo
     const title = formData.get('title')
     const code = formData.get('code')
 
-    if (typeof title !== 'string' || title.length < 3) {
-        return {
-            message: 'Title must be at least 3 characters long',
+    try {
+        if (typeof title !== 'string' || title.length < 3) {
+            return {
+                message: 'Title must be at least 3 characters long',
+            }
+        }
+        if (typeof code !== 'string' || code.length < 10) {
+            return {
+                message: 'Code must be at least 10 characters long',
+            }
+        }
+
+        await db.snippet.create({
+            data: {
+                title,
+                code,
+            },
+        })
+    } catch (error) {
+        if (error instanceof Error) {
+            return {
+                message: error.message,
+            }
+        } else {
+            return {
+                message: 'Unknown error',
+            }
         }
     }
-    if (typeof code !== 'string' || code.length < 10) {
-        return {
-            message: 'Code must be at least 10 characters long',
-        }
-    }
-
-    const snippet = await db.snippet.create({
-        data: {
-            title,
-            code,
-        },
-    })
-    console.log(snippet)
-
     redirect('/')
 }
