@@ -1,6 +1,7 @@
 import {db} from "@/src/db";
 import {notFound} from "next/navigation";
 import Link from "next/link";
+import * as actions from "@/src/actions";
 
 interface SnippetPageProps {
     params: {
@@ -19,6 +20,7 @@ export default async function SnippetPage(props: SnippetPageProps) {
         return notFound()
     }
 
+    const deleteSnippetActions = actions.deleteSnippet.bind(null, snippet.id)
 
     return (
         <div>
@@ -26,7 +28,9 @@ export default async function SnippetPage(props: SnippetPageProps) {
                 <h1 className={'text-xl font-bold'}>{snippet.title}</h1>
                 <div className={'flex gap-4'}>
                     <Link href={`/snippets/${snippet.id}/edit`} className={'p-2 border rounded'}>Edit</Link>
-                    <button className={'p-2 border rounded'}>Delete</button>
+                    <form action={deleteSnippetActions}>
+                        <button className={'p-2 border rounded'}>Delete</button>
+                    </form>
                 </div>
             </div>
             <pre className={'border rounded p-3 bg-gray-200 border-gray-200'}>

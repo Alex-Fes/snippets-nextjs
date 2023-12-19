@@ -13,7 +13,7 @@ export default async function Home() {
                 href={`/snippets/${snippet.id}`}
             >
                 <div>{snippet.title}</div>
-                <pre>{snippet.code}</pre>
+                <div>View</div>
             </Link>
         )
     })
