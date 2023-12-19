@@ -2,7 +2,7 @@ import {db} from "@/src/db";
 import {redirect} from "next/navigation";
 
 
-export default function SnippetCreatePage() {
+export default function CreateSnippetPage() {
     async function createSnippet(formData: FormData) {
         'use server'
 
@@ -19,6 +19,8 @@ export default function SnippetCreatePage() {
 
         redirect('/')
     }
+
+
 
     return (
         <form action={createSnippet}>
